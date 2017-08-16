@@ -1,0 +1,83 @@
+* Story
+** I started programming when I was about 14 for fun as part of a video game I played
+*** PHP
+*** UnrealScript
+** I went to college to study Biology, got my associates, left school
+** Fell in love with coding but didn't pursue it for 2 years
+** Finally took the leap after working closely with devs at a startup
+** Search for a Bootcamp
+** Bloc - 1on1 Mentor Based
+*** Backend - Rails
+*** Frontend - Javascript & Angular
+*** Software Engineering Principals - Algorithms/Databases/ORM's/Architecture and Design Patterns
+*** Open Source Work
+*** Mention Referral opportunities
+*** Not cheap
+* I work at ModernMsg as a Quality Assurance Engineer
+* Finding a job tips
+** 3 Things I've found that jobs care about and how to "study" them
+*** Industry Fit
+**** Companies want to know you care about where the industry is going
+***** They want to know your keeping up with the latest "news" in the industry
+***** Resources: HackerNews, Reddit, Podcasts
+*** Culture Fit
+**** They want to know you're willing to learn and grow
+**** They want you to, not be "confident", but to have a level of security in your ability to learn and give/get feedback
+**** They want to know you're passionate about the job, about making things better, and implmenting features to give better experiences accross the board
+*** Technical Fit
+**** They want to know that you *can* learn and grow in your technical skills
+**** They don't need you to be extremely technically proficient
+***** The caveat is that you have to have some level understanding of how most things work, not necessarily the details
+**** Build, practice, and explain
+***** As you build things that have a new "tech" to *you* explain how it works to a rubber duck
+****** This is valuable practice for when you explain something you've built to someone else
+****** This is also great for when your asked "what's an issue you've run into while building something
+*** Tips for dealing with each of these
+**** Industry
+***** I was asked "What I thought of Rails 5?"
+***** HackerNews
+***** Subscribe to Newsletters
+***** Reddit
+***** YouTube
+***** Start a Blog
+**** Culture
+***** Self-awareness
+***** Example: I'm very socially awkward - I get in my head too much and can make social interactions seem to forced - I struggle to naturally find things to talk about
+***** Practice
+***** This is mainly about you rather than them
+**** Technical
+***** Build, practice, and explain
+****** As you build things that have a new "tech" to *you* explain how it works to a rubber duck
+******* This is valuable practice for when you explain something you've built to someone else
+******* This is also great for when your asked "what's an issue you've run into while building something
+***** Algorithms
+****** Sorting [Insertion, Bubble, Heap, Merge, Quick]
+****** Searching [Linear, Binary, Iterative]
+****** Recursion
+****** Space/Time Complexity
+***** Abstractions
+***** Frameworks
+***** Databases
+***** While the industry as a whole is looking to change this, a lot of companies fall back on this as their method of technical assesment
+***** Resources
+****** CodeWars
+****** LeetCode
+****** HackerRank
+***** Practice Interviewing
+** Organizing Your Job Search
+*** Trello Board
+*** Google Spreadsheet
+*** Keeping Consistent Follow-ups
+**** Part of Daily Routine
+*** Network Network Network
+**** Go to Meet ups
+**** Invite developers out for coffee etc..
+**** Cold message on LinkedIn
+**** Build a network
+* Learning Tips
+** Learn ONE thing really well + javascript
+* Resources
+** [[http://haseebq.com/how-to-break-into-tech-job-hunting-and-interviews/#correcting][Hasseb Qureshi's Blog]]
+** [[https://www.careercup.com/][CareerCup]]
+
+

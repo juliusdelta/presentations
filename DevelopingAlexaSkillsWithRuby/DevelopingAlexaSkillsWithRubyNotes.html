@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Developing Alexa Skills with Ruby</title>
+<meta name="author" content="(JD Gonzales)"/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="http://cdn.jsdelivr.net/reveal.js/3.0.0/css/reveal.css"/>
+
+<link rel="stylesheet" href="http://cdn.jsdelivr.net/reveal.js/3.0.0/css/theme/moon.css" id="theme"/>
+
+
+<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+<script>
+    if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = 'http://cdn.jsdelivr.net/reveal.js/3.0.0/css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+    }
+</script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+
+<section>
+<section id="slide-org9c5b8f2">
+<h2 id="org9c5b8f2">Intro</h2>
+<div class="outline-text-2" id="text-org9c5b8f2">
+</div></section>
+<section id="slide-org2c20b5f">
+<h3 id="org2c20b5f">My name is JD</h3>
+</section>
+<section id="slide-org1988b57">
+<h3 id="org1988b57">Modern Message</h3>
+
+</section>
+</section>
+<section>
+<section id="slide-org2bc2307">
+<h2 id="org2bc2307">How I got Started</h2>
+<div class="outline-text-2" id="text-org2bc2307">
+</div></section>
+<section id="slide-orgcf7c0c7">
+<h3 id="orgcf7c0c7">Developing Alexa skills for Bloc</h3>
+
+</section>
+</section>
+<section>
+<section id="slide-org31f5a77">
+<h2 id="org31f5a77">Game of Trivia</h2>
+
+</section>
+</section>
+<section>
+<section id="slide-org37a690a">
+<h2 id="org37a690a">It's <span class="underline">really</span> easy like <span class="underline">really</span> <span class="underline">really</span> easy</h2>
+
+</section>
+</section>
+<section>
+<section id="slide-orgba0f608">
+<h2 id="orgba0f608">I think the language that's most supported (due to documentation) has been javascript.</h2>
+<div class="outline-text-2" id="text-orgba0f608">
+</div></section>
+<section id="slide-orgb37020b">
+<h3 id="orgb37020b">But who likes javascript??</h3>
+
+</section>
+</section>
+<section>
+<section id="slide-org06acac1">
+<h2 id="org06acac1">There are three different parts to developing an alexa skill</h2>
+<div class="outline-text-2" id="text-org06acac1">
+</div></section>
+<section id="slide-org1279166">
+<h3 id="org1279166">Code -&gt; It's just a series of json payloads going back and forth</h3>
+</section>
+<section id="slide-org1c3a4cd">
+<h3 id="org1c3a4cd">Intents -&gt; The functions that your skill will perform</h3>
+</section>
+<section id="slide-orge247cb2">
+<h3 id="orge247cb2">Slots -&gt; User input data that maps to the intents for a function</h3>
+
+</section>
+</section>
+<section>
+<section id="slide-org3eb2eed">
+<h2 id="org3eb2eed">Code</h2>
+<div class="outline-text-2" id="text-org3eb2eed">
+</div></section>
+<section id="slide-org145e899">
+<h3 id="org145e899">Server (Sinatra or Rails)</h3>
+</section>
+<section id="slide-orge9cea3c">
+<h3 id="orge9cea3c">Preferrably need a library to handle the loads</h3>
+</section>
+<section id="slide-orgc770621">
+<h3 id="orgc770621">The right Alexa requirements</h3>
+
+</section>
+</section>
+<section>
+<section id="slide-org2ef2a39">
+<h2 id="org2ef2a39">Intents</h2>
+<div class="outline-text-2" id="text-org2ef2a39">
+</div></section>
+<section id="slide-org2d36bd0">
+<h3 id="org2d36bd0">The fucntions that your skill can do</h3>
+<div class="outline-text-3" id="text-org2d36bd0">
+</div></section>
+<section id="slide-org2735e14">
+<h4 id="org2735e14">Fires when utterences are made -&gt; Things a customer will say to your app</h4>
+</section>
+</section>
+<section>
+<section id="slide-org95c6462">
+<h2 id="org95c6462">Slots</h2>
+<div class="outline-text-2" id="text-org95c6462">
+</div></section>
+<section id="slide-org9feec6b">
+<h3 id="org9feec6b">Information provided by user to complete an intent</h3>
+
+</section>
+</section>
+<section>
+<section id="slide-org6db232a">
+<h2 id="org6db232a">Lets see some code</h2>
+<div class="outline-text-2" id="text-org6db232a">
+</div></section>
+<section id="slide-org2dbf236">
+<h3 id="org2dbf236">What you need</h3>
+</section>
+<section id="slide-org7995f08">
+<h3 id="org7995f08">Predefined Intents</h3>
+</section>
+</section>
+</div>
+</div>
+<script src="http://cdn.jsdelivr.net/reveal.js/3.0.0/lib/js/head.min.js"></script>
+<script src="http://cdn.jsdelivr.net/reveal.js/3.0.0/js/reveal.js"></script>
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+
+controls: true,
+progress: true,
+history: false,
+center: true,
+slideNumber: 'c',
+rollingLinks: true,
+keyboard: true,
+overview: true,
+width: 1200,
+height: 800,
+margin: 0.10,
+minScale: 0.50,
+maxScale: 2.50,
+
+theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+transition: Reveal.getQueryHash().transition || 'linear', // default/cube/page/concave/zoom/linear/fade/none
+transitionSpeed: 'default',
+multiplex: {
+    secret: '', // null if client
+    id: '', // id, obtained from socket.io server
+    url: '' // Location of socket.io server
+},
+
+// Optional libraries used to extend on reveal.js
+dependencies: [
+ { src: 'http://cdn.jsdelivr.net/reveal.js/3.0.0/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+ { src: 'http://cdn.jsdelivr.net/reveal.js/3.0.0/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: 'http://cdn.jsdelivr.net/reveal.js/3.0.0/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: 'http://cdn.jsdelivr.net/reveal.js/3.0.0/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+ { src: 'http://cdn.jsdelivr.net/reveal.js/3.0.0/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }]
+});
+</script>
+</body>
+</html>
