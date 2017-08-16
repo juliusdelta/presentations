@@ -1,0 +1,166 @@
+#+REVEAL_ROOT: http://cdn.jsdelivr.net/reveal.js/3.0.0/
+
+#+TITLE: Hacking into the Tech Industry
+#+AUTHOR: JD Gonzales
+#+EMAIL: jd_gonzales@icloud.com
+
+#+OPTIONS: toc:nil num:nil
+#+OPTIONS: reveal_width:1200
+#+OPTIONS: reveal_height:800
+#+REVEAL_MARGIN: 0.1
+#+REVEAL_MIN_SCALE: 0.5
+#+REVEAL_MAX_SCALE: 2.5
+#+OPTIONS: reveal_center:t
+#+OPTIONS: reveal_rolling_links:t reveal_keyboard:t reveal_overview:t 
+#+OPTIONS: reveal_title_slide:nil
+#+REVEAL_TRANS: linear
+#+OPTIONS: toc:nil reveal_mathjax:t
+#+REVEAL_THEME: moon
+#+REVEAL_TRANS: linear
+#+REVEAL_DEFAULT_FRAG_STYLE: appear
+#+REVEAL_PLUGINS: notes
+
+* *Hacking Your Way into the Tech Industry*
+JD Gonzales
+
+Github - Twitter - LinkedIn 
+
+@juliusdelta
+ 
+* How I Got Started
+[[./images/ut2k4.png]]
+- It was a hobby
+- Learned some UnrealScript
+- Learned some PHP
+- Some MySQL
+** College Degree:
+[[./images/diploma.jpg]]
+
+
+* What I Was Doing
+- Marketing
+- Content Managment
+- Social Media Campaigns
+- SEO/PPC Campaigns
+- Apple Retail Training
+
+* [[./images/bloclogo.png]]
+*1 on 1 Mentor*
+*Software Engineering Program*
+- Ruby on Rails
+- Javascript/Angular/React
+- Software Engineering Principals (Algorithms, Data Structures, Databases, & System Architecture
+- Open Source Work
+
+* I had...
+- *187 Job Applications*
+- *21 Interviews*
+- *27 Explicit Rejections*
+- *1 job*
+
+* Lets Talk about Hacking Your way into Tech
+    :PROPERTIES:
+    :reveal_background: ./images/hackerman.gif
+    :reveal_background_trans: slide
+    :END:
+
+* 
+*It's a Numbers Game*
+
+* 3 Things Companies Care About
+#+ATTR_REVEAL: :frag (appear)
+- Industry Fit - You caring about where the industry is going
+- Culture Fit - Feedback, growth, passion
+- Technical Fit - Continuous learning, problem solving skills, code
+
+* Industry Fit
+#+ATTR_REVEAL: :frag (appear)
+- *Keep up to date*
+  - HackerNews
+  - Newsletters
+  - Reddit
+
+* Culture Fit
+#+ATTR_REVEAL: :frag (appear)
+- *Self Awareness*
+- Good culture is more about you than the company
+
+* 
+*Technical*
+
+* [[./images/jarjar.jpeg]]
+
+* Study
+#+ATTR_REVEAL: :frag (appear)
+- Build, Practice, & Explain
+- Algorithms
+  - Sorting
+  - Searching
+  - Recurision
+  - Space/Time Complexity (Big O Notation)
+[[./images/algorithms.gif]]
+
+* Study
+#+ATTR_REVEAL: :frag (appear)
+- Abstractions
+- Frameworks
+- Databases
+ 
+* Learning Approach
+#+ATTR_REVEAL: :frag (appear)
+- Learn one or two things REALLY well
+- Don't spread yourself to thin
+  - I'm looking at you javascript frameworks...
+
+* Practice Practice Practice...
+- Practice Interviewing
+  - Interviewing.io
+- Practice Problem Solving
+  - HackerRank
+  - CodeWars
+- Explain Out Loud
+ 
+* 
+*Practical Tips*
+
+* Get Organized
+#+ATTR_REVEAL: :frag (appear)
+- Schedule time to study
+- Track your progress
+
+* Trello
+[[./images/trelloexample.png]]
+
+* Get Organized
+- Schedule time to study
+- Track your applications
+
+* Networking
+- Go to Meet Ups
+- Meet Devs
+- Invite them out for coffee
+- Ask questions
+- Rinse && Repeat
+ 
+* Final Thoughts
+- It's a Numbers Game
+- NETWORK
+
+* 
+    :PROPERTIES:
+    :reveal_background: ./images/thanks.gif
+    :reveal_background_trans: slide
+    :END:
+*Made Proudly w/ Spacemacs, OrgMode, & Reveal.js*
+
+*Thank You*
+
+
+ 
+
+
+
+
+
+
+

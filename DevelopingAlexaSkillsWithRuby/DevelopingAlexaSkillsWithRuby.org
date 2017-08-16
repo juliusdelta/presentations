@@ -1,0 +1,255 @@
+#+REVEAL_ROOT: http://cdn.jsdelivr.net/reveal.js/3.0.0/
+
+#+TITLE: Developing Alexa Skills w/ Ruby
+#+AUTHOR: JD Gonzales
+#+EMAIL: jd_gonzales@icloud.com
+
+#+OPTIONS: toc:nil num:nil
+#+OPTIONS: reveal_width:1200
+#+OPTIONS: reveal_height:800
+#+REVEAL_MARGIN: 0.1
+#+REVEAL_MIN_SCALE: 0.5
+#+REVEAL_MAX_SCALE: 2.5
+#+OPTIONS: reveal_center:t
+#+OPTIONS: reveal_rolling_links:t reveal_keyboard:t reveal_overview:t 
+#+OPTIONS: reveal_title_slide:nil
+#+REVEAL_TRANS: linear
+#+OPTIONS: toc:nil reveal_mathjax:t
+#+REVEAL_THEME: night
+#+REVEAL_TRANS: linear
+#+REVEAL_DEFAULT_FRAG_STYLE: appear
+#+REVEAL_PLUGINS: notes
+
+* *Developing Alexa Skills with Ruby*
+JD Gonzales
+
+Github - Twitter - LinkedIn 
+
+@juliusdelta
+
+* What You Need
+- Account on Developer.Amazon.com
+- Ruby 2.3.1 <
+- Ngrok - Masks local server as https (for local testing)
+
+* There are Three Parts
+- The Code
+- The Intents
+- The Slots
+
+* The Code
+#+ATTR_REVEAL: :frag (appear)
+- Server
+- Library
+ 
+* Intents
+- The fucntions that your skill can do
+- Fires when utterences are made
+- Things a customer will say to interact with your app
+
+* Slots
+- Information provided by user to complete an intent
+
+* Example JSON Setup
+#+BEGIN_SRC json
+{
+  "intents": [
+    {
+      "name": "getFactsIntent",
+      "samples": [
+        "tell me about {id}"
+      ],
+      "slots": [
+        {
+          "name": "id",
+          "type": "identification",
+          "samples": [
+            "Tell me about {id}"
+          ]
+        }
+      ]
+    }
+  ],
+  "types": [
+    {
+      "name": "identification",
+      "values": [
+        {
+          "id": null,
+          "name": {
+            "value": "1",
+            "synonyms": []
+          }
+        }
+#+END_SRC
+
+** 
+#+BEGIN_SRC json
+      ]
+    }
+  ],
+  "prompts": [
+    {
+      "id": "Elicit.Intent-getFactsIntent.IntentSlot-id",
+      "promptVersion": "1.0",
+      "definitionVersion": "1.0",
+      "variations": [
+        {
+          "type": "PlainText",
+          "value": "give me an ID"
+        }
+      ]
+    }
+  ],
+  "dialog": {
+    "version": "1.0",
+    "intents": [
+      {
+        "name": "getFactsIntent",
+        "confirmationRequired": false,
+        "prompts": {},
+        "slots": [
+          {
+            "name": "id",
+            "type": "identification",
+            "elicitationRequired": true,
+            "confirmationRequired": false,
+            "prompts": {
+              "elicit": "Elicit.Intent-getFactsIntent.IntentSlot-id"
+            }...
+#+END_SRC
+
+* How do I Make it?
+- Send and Receive JSON Paylods Like...
+
+* Receive
+#+BEGIN_SRC json
+{
+  "session": {
+    "sessionId": "SessionId.cbb03f12-d6a1-4df2-8799-86253f7b5f53",
+    "application": {
+      "applicationId": "amzn1.ask.skill.9dd97fa8-7fb7-4d90-91a9-807c239b37dd"
+    },
+    "attributes": {},
+    "user": {
+      "userId": "amzn1.ask.account.[hehe you can't see this]"
+    },
+    "new": true
+  },
+  "request": {
+    "type": "LaunchRequest",
+    "requestId": "EdwRequestId.cfd6d09d-4765-4cc0-8afd-3c00e7a43267",
+    "locale": "en-US",
+    "timestamp": "2017-08-01T03:23:20Z"
+  },
+  "version": "1.0"
+}
+#+END_SRC
+
+* Respond
+#+BEGIN_SRC json
+{
+  "version": "1.0",
+  "response": {
+    "outputSpeech": {
+      "type": "PlainText",
+      "text": "Give me an i.d. and I can tell you about a Star Wars character"
+    },
+    "speechletResponse": {
+      "outputSpeech": {
+        "text": "Give me an i.d. and I can tell you about a Star Wars character"
+      },
+      "shouldEndSession": false
+    }
+  },
+  "sessionAttributes": {}
+}
+#+END_SRC
+
+* Deep Dive w/ Example
+
+* Simple Weather Skill
+- Slot: City given from User
+- Call Weather API w/ City
+- Return 1 day forecast
+
+* File Structure
+[[./images/filestructure.png]]
+
+* Gemfile
+#+BEGIN_SRC ruby
+source "https://rubygems.org"
+
+gem 'sinatra'
+gem 'ralyxa'
+gem 'httparty'
+gem 'dotenv'
+#+END_SRC
+
+* ./server.rb
+#+BEGIN_SRC ruby
+require 'sinatra'
+require 'ralyxa'
+
+post "/" do
+  Ralyxa::Skill.handle(request)
+end
+#+END_SRC
+
+* ./lib/weather.rb
+#+BEGIN_SRC ruby
+require 'httparty'
+require 'json'
+require 'dotenv'
+
+class Weather
+  include HTTParty
+  Dotenv.load
+
+  URL = 'http://dataservice.accuweather.com/'
+  API_KEY = ENV['WEATHER_API_KEY']
+  FORECAST = 'forecasts/v1/daily/1day/'
+
+
+  def self.get_weather(city)
+    key = get_key(city).to_s
+    response = get(URL + FORECAST + key + "?apikey=%20" + API_KEY + "%20")
+    response = JSON.parse(response.body)
+    return response["Headline"]["Text"]
+  end
+
+  def self.get_key(city)
+    response = get(URL + "locations/v1/cities/search?apikey=%20" + API_KEY + "%20&q=" + city)
+    response = JSON.parse(response.body)
+    return response[0]["Key"]
+  end
+
+end
+#+END_SRC
+
+* ./intents/launch_request_intent.rb
+#+BEGIN_SRC ruby
+require 'ralyxa'
+
+intent 'LaunchRequest' do
+  ask("What city would you like weather information about?")
+end
+#+END_SRC
+
+* ./intents/get_weather_intent.rb
+#+BEGIN_SRC ruby
+require './lib/weather.rb'
+require 'ralyxa'
+
+intent "getWeatherIntent" do
+  city = request.slot_value("city")
+  respond(Weather.get_weather(city))
+end
+#+END_SRC
+
+* Let's See it!
+
+* Additional Resources
+- http://bit.ly/2uVALUt
+
+

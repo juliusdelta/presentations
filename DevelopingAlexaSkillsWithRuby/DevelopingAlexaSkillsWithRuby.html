@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Developing Alexa Skills w/ Ruby</title>
+<meta name="author" content="(JD Gonzales)"/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="http://cdn.jsdelivr.net/reveal.js/3.0.0/css/reveal.css"/>
+
+<link rel="stylesheet" href="http://cdn.jsdelivr.net/reveal.js/3.0.0/css/theme/night.css" id="theme"/>
+
+
+<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+<script>
+    if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = 'http://cdn.jsdelivr.net/reveal.js/3.0.0/css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+    }
+</script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+
+<section>
+<section id="slide-org534973e">
+<h2 id="org534973e"><b>Developing Alexa Skills with Ruby</b></h2>
+<p>
+JD Gonzales
+</p>
+
+<p>
+Github - Twitter - LinkedIn 
+</p>
+
+<p>
+@juliusdelta
+</p>
+
+</section>
+</section>
+<section>
+<section id="slide-org01642d3">
+<h2 id="org01642d3">What You Need</h2>
+<ul>
+<li>Account on Developer.Amazon.com</li>
+<li>Ruby 2.3.1 &lt;</li>
+<li>Ngrok - Masks local server as https (for local testing)</li>
+
+</ul>
+
+</section>
+</section>
+<section>
+<section id="slide-orgbc5c9bd">
+<h2 id="orgbc5c9bd">There are Three Parts</h2>
+<ul>
+<li class="fragment appear">The Code</li>
+<li class="fragment appear">The Intents</li>
+<li class="fragment appear">The Slots</li>
+
+</ul>
+
+</section>
+</section>
+<section>
+<section id="slide-org1716be1">
+<h2 id="org1716be1">The Code</h2>
+<ul>
+<li class="fragment appear">Server</li>
+<li class="fragment appear">Library</li>
+
+</ul>
+
+</section>
+</section>
+<section>
+<section id="slide-org3490936">
+<h2 id="org3490936">Intents</h2>
+<ul>
+<li>The fucntions that your skill can do</li>
+<li>Fires when utterences are made -&gt; Things a customer will say to interact with your app</li>
+
+</ul>
+
+</section>
+</section>
+<section>
+<section id="slide-orge4814cd">
+<h2 id="orge4814cd">Slots</h2>
+<ul>
+<li>Information provided by user to complete an intent</li>
+
+</ul>
+
+</section>
+</section>
+<section>
+<section id="slide-orgfa5ffc2">
+<h2 id="orgfa5ffc2">Example JSON Setup</h2>
+<div class="org-src-container">
+
+<pre  class="src src-json"><span style="color: #aadddd;">{</span>
+  <span style="color: #aaffaa;">"intents"</span>: <span style="color: #aaeecc;">[</span>
+    <span style="color: #aaccff;">{</span>
+      <span style="color: #aaffaa;">"name"</span>: <span style="color: #aadddd;">"getFactsIntent"</span>,
+      <span style="color: #aaffaa;">"samples"</span>: <span style="color: #ff3333;">[</span>
+        <span style="color: #aadddd;">"tell me about {id}"</span>
+      <span style="color: #ff3333;">]</span>,
+      <span style="color: #aaffaa;">"slots"</span>: <span style="color: #ff3333;">[</span>
+        <span style="color: #aaffaa;">{</span>
+          <span style="color: #aaffaa;">"name"</span>: <span style="color: #aadddd;">"id"</span>,
+          <span style="color: #aaffaa;">"type"</span>: <span style="color: #aadddd;">"identification"</span>,
+          <span style="color: #aaffaa;">"samples"</span>: <span style="color: #aaccff;">[</span>
+            <span style="color: #aadddd;">"Tell me about {id}"</span>
+          <span style="color: #aaccff;">]</span>
+        <span style="color: #aaffaa;">}</span>
+      <span style="color: #ff3333;">]</span>
+    <span style="color: #aaccff;">}</span>
+  <span style="color: #aaeecc;">]</span>,
+  <span style="color: #aaffaa;">"types"</span>: <span style="color: #aaeecc;">[</span>
+    <span style="color: #aaccff;">{</span>
+      <span style="color: #aaffaa;">"name"</span>: <span style="color: #aadddd;">"identification"</span>,
+      <span style="color: #aaffaa;">"values"</span>: <span style="color: #ff3333;">[</span>
+        <span style="color: #aaffaa;">{</span>
+          <span style="color: #aaffaa;">"id"</span>: <span style="color: #ccaaff;">null</span>,
+          <span style="color: #aaffaa;">"name"</span>: <span style="color: #aaccff;">{</span>
+            <span style="color: #aaffaa;">"value"</span>: "<span style="color: #ccaaff;">1</span>",
+            <span style="color: #aaffaa;">"synonyms"</span>: <span style="color: #ff8888;">[]</span>
+          <span style="color: #aaccff;">}</span>
+        <span style="color: #aaffaa;">}</span>
+</pre>
+</div>
+
+</section>
+<section id="slide-org94dd95d">
+<h3 id="org94dd95d"></h3>
+<div class="org-src-container">
+
+<pre  class="src src-json">    <span style="color: #88090B;">]</span>
+  <span style="color: #88090B;">}</span>
+<span style="color: #88090B;">]</span>,
+<span style="color: #aaffaa;">"prompts"</span>: <span style="color: #88090B;">[</span>
+  <span style="color: #88090B;">{</span>
+    <span style="color: #aaffaa;">"id"</span>: <span style="color: #aadddd;">"Elicit.Intent-getFactsIntent.IntentSlot-id"</span>,
+    <span style="color: #aaffaa;">"promptVersion"</span>: "<span style="color: #ccaaff;">1</span>.<span style="color: #ccaaff;">0</span>",
+    <span style="color: #aaffaa;">"definitionVersion"</span>: "<span style="color: #ccaaff;">1</span>.<span style="color: #ccaaff;">0</span>",
+    <span style="color: #aaffaa;">"variations"</span>: <span style="color: #88090B;">[</span>
+      <span style="color: #aadddd;">{</span>
+        <span style="color: #aaffaa;">"type"</span>: <span style="color: #aadddd;">"PlainText"</span>,
+        <span style="color: #aaffaa;">"value"</span>: <span style="color: #aadddd;">"give me an ID"</span>
+      <span style="color: #aadddd;">}</span>
+    <span style="color: #88090B;">]</span>
+  <span style="color: #88090B;">}</span>
+<span style="color: #88090B;">]</span>,
+<span style="color: #aaffaa;">"dialog"</span>: <span style="color: #88090B;">{</span>
+  <span style="color: #aaffaa;">"version"</span>: "<span style="color: #ccaaff;">1</span>.<span style="color: #ccaaff;">0</span>",
+  <span style="color: #aaffaa;">"intents"</span>: <span style="color: #88090B;">[</span>
+    <span style="color: #88090B;">{</span>
+      <span style="color: #aaffaa;">"name"</span>: <span style="color: #aadddd;">"getFactsIntent"</span>,
+      <span style="color: #aaffaa;">"confirmationRequired"</span>: <span style="color: #ccaaff;">false</span>,
+      <span style="color: #aaffaa;">"prompts"</span>: <span style="color: #aadddd;">{}</span>,
+      <span style="color: #aaffaa;">"slots"</span>: <span style="color: #aadddd;">[</span>
+        <span style="color: #aaeecc;">{</span>
+          <span style="color: #aaffaa;">"name"</span>: <span style="color: #aadddd;">"id"</span>,
+          <span style="color: #aaffaa;">"type"</span>: <span style="color: #aadddd;">"identification"</span>,
+          <span style="color: #aaffaa;">"elicitationRequired"</span>: <span style="color: #ccaaff;">true</span>,
+          <span style="color: #aaffaa;">"confirmationRequired"</span>: <span style="color: #ccaaff;">false</span>,
+          <span style="color: #aaffaa;">"prompts"</span>: <span style="color: #aaccff;">{</span>
+            <span style="color: #aaffaa;">"elicit"</span>: <span style="color: #aadddd;">"Elicit.Intent-getFactsIntent.IntentSlot-id"</span>
+          <span style="color: #aaccff;">}</span>...
+</pre>
+</div>
+
+</section>
+</section>
+<section>
+<section id="slide-org8c69ed9">
+<h2 id="org8c69ed9">How do I Make it?</h2>
+<ul>
+<li>Send and Receive JSON Paylods Like&#x2026;</li>
+
+</ul>
+
+</section>
+</section>
+<section>
+<section id="slide-org4732217">
+<h2 id="org4732217">Receive</h2>
+<div class="org-src-container">
+
+<pre  class="src src-json"><span style="color: #aadddd;">{</span>
+  <span style="color: #aaffaa;">"session"</span>: <span style="color: #aaeecc;">{</span>
+    <span style="color: #aaffaa;">"sessionId"</span>: "SessionId.cbb<span style="color: #ccaaff;">03</span>f<span style="color: #ccaaff;">12</span>-d<span style="color: #ccaaff;">6</span>a<span style="color: #ccaaff;">1</span>-<span style="color: #ccaaff;">4df2</span>-<span style="color: #ccaaff;">8799</span>-<span style="color: #ccaaff;">86253f7b5f53</span>",
+    <span style="color: #aaffaa;">"application"</span>: <span style="color: #aaccff;">{</span>
+      <span style="color: #aaffaa;">"applicationId"</span>: "amzn<span style="color: #ccaaff;">1</span>.ask.skill.<span style="color: #ccaaff;">9dd97fa8</span>-<span style="color: #ccaaff;">7fb7</span>-<span style="color: #ccaaff;">4d90</span>-<span style="color: #ccaaff;">91a9</span>-<span style="color: #ccaaff;">807c239b37dd</span>"
+    <span style="color: #aaccff;">}</span>,
+    <span style="color: #aaffaa;">"attributes"</span>: <span style="color: #aaccff;">{}</span>,
+    <span style="color: #aaffaa;">"user"</span>: <span style="color: #aaccff;">{</span>
+      <span style="color: #aaffaa;">"userId"</span>: <span style="color: #aadddd;">"amzn1.ask.account.[hehe you can't see this]"</span>
+    <span style="color: #aaccff;">}</span>,
+    <span style="color: #aaffaa;">"new"</span>: <span style="color: #ccaaff;">true</span>
+  <span style="color: #aaeecc;">}</span>,
+  <span style="color: #aaffaa;">"request"</span>: <span style="color: #aaeecc;">{</span>
+    <span style="color: #aaffaa;">"type"</span>: <span style="color: #aadddd;">"LaunchRequest"</span>,
+    <span style="color: #aaffaa;">"requestId"</span>: "EdwRequestId.cfd<span style="color: #ccaaff;">6</span>d<span style="color: #ccaaff;">09</span>d-<span style="color: #ccaaff;">4765</span>-<span style="color: #ccaaff;">4cc0</span>-<span style="color: #ccaaff;">8afd</span>-<span style="color: #ccaaff;">3c00e7a43267</span>",
+    <span style="color: #aaffaa;">"locale"</span>: <span style="color: #aadddd;">"en-US"</span>,
+    <span style="color: #aaffaa;">"timestamp"</span>: "<span style="color: #ccaaff;">2017</span>-<span style="color: #ccaaff;">08</span>-<span style="color: #ccaaff;">01T03</span>:<span style="color: #ccaaff;">23</span>:<span style="color: #ccaaff;">20Z</span>"
+  <span style="color: #aaeecc;">}</span>,
+  <span style="color: #aaffaa;">"version"</span>: "<span style="color: #ccaaff;">1</span>.<span style="color: #ccaaff;">0</span>"
+<span style="color: #aadddd;">}</span>
+</pre>
+</div>
+
+</section>
+</section>
+<section>
+<section id="slide-org1ccc197">
+<h2 id="org1ccc197">Respond</h2>
+<div class="org-src-container">
+
+<pre  class="src src-json"><span style="color: #aadddd;">{</span>
+  <span style="color: #aaffaa;">"version"</span>: "<span style="color: #ccaaff;">1</span>.<span style="color: #ccaaff;">0</span>",
+  <span style="color: #aaffaa;">"response"</span>: <span style="color: #aaeecc;">{</span>
+    <span style="color: #aaffaa;">"outputSpeech"</span>: <span style="color: #aaccff;">{</span>
+      <span style="color: #aaffaa;">"type"</span>: <span style="color: #aadddd;">"PlainText"</span>,
+      <span style="color: #aaffaa;">"text"</span>: <span style="color: #aadddd;">"Give me an i.d. and I can tell you about a Star Wars character"</span>
+    <span style="color: #aaccff;">}</span>,
+    <span style="color: #aaffaa;">"speechletResponse"</span>: <span style="color: #aaccff;">{</span>
+      <span style="color: #aaffaa;">"outputSpeech"</span>: <span style="color: #ff3333;">{</span>
+        <span style="color: #aaffaa;">"text"</span>: <span style="color: #aadddd;">"Give me an i.d. and I can tell you about a Star Wars character"</span>
+      <span style="color: #ff3333;">}</span>,
+      <span style="color: #aaffaa;">"shouldEndSession"</span>: <span style="color: #ccaaff;">false</span>
+    <span style="color: #aaccff;">}</span>
+  <span style="color: #aaeecc;">}</span>,
+  <span style="color: #aaffaa;">"sessionAttributes"</span>: <span style="color: #aaeecc;">{}</span>
+<span style="color: #aadddd;">}</span>
+</pre>
+</div>
+
+</section>
+</section>
+<section>
+<section id="slide-orgea128f9">
+<h2 id="orgea128f9">Deep Dive w/ Example</h2>
+
+</section>
+</section>
+<section>
+<section id="slide-org84ac3a0">
+<h2 id="org84ac3a0">Simple Weather Skill</h2>
+<ul>
+<li>Slot: City given from User</li>
+<li>Call Weather API w/ City</li>
+<li>Return 1 day forecast</li>
+
+</ul>
+
+</section>
+</section>
+<section>
+<section id="slide-org2bcd628">
+<h2 id="org2bcd628">File Structure</h2>
+
+<div class="figure">
+<p><img src="./images/filestructure.png" alt="filestructure.png" />
+</p>
+</div>
+
+</section>
+</section>
+<section>
+<section id="slide-org66dc28c">
+<h2 id="org66dc28c">Gemfile</h2>
+<div class="org-src-container">
+
+<pre  class="src src-ruby">source <span style="color: #aadddd;">"https://rubygems.org"</span>
+
+gem <span style="color: #aadddd;">'sinatra'</span>
+gem <span style="color: #aadddd;">'ralyxa'</span>
+gem <span style="color: #aadddd;">'httparty'</span>
+gem <span style="color: #aadddd;">'dotenv'</span>
+</pre>
+</div>
+
+</section>
+</section>
+<section>
+<section id="slide-org74370c2">
+<h2 id="org74370c2">./server.rb</h2>
+<div class="org-src-container">
+
+<pre  class="src src-ruby"><span style="color: #aaffaa;">require</span> <span style="color: #aadddd;">'sinatra'</span>
+<span style="color: #aaffaa;">require</span> <span style="color: #aadddd;">'ralyxa'</span>
+
+post <span style="color: #aadddd;">"/"</span> <span style="color: #aaffaa;">do</span>
+  <span style="color: #aaeecc;">Ralyxa</span>::<span style="color: #aaeecc;">Skill</span>.handle<span style="color: #aadddd;">(</span>request<span style="color: #aadddd;">)</span>
+<span style="color: #aaffaa;">end</span>
+</pre>
+</div>
+
+</section>
+</section>
+<section>
+<section id="slide-org75d4cbb">
+<h2 id="org75d4cbb">./lib/weather.rb</h2>
+<div class="org-src-container">
+
+<pre  class="src src-ruby"><span style="color: #aaffaa;">require</span> <span style="color: #aadddd;">'httparty'</span>
+<span style="color: #aaffaa;">require</span> <span style="color: #aadddd;">'json'</span>
+<span style="color: #aaffaa;">require</span> <span style="color: #aadddd;">'dotenv'</span>
+
+<span style="color: #aaffaa;">class</span> <span style="color: #aaeecc;">Weather</span>
+  <span style="color: #aaffaa;">include</span> <span style="color: #aaeecc;">HTTParty</span>
+  <span style="color: #aaeecc;">Dotenv</span>.load
+
+  <span style="color: #aaeecc;">URL</span> = <span style="color: #aadddd;">'http://dataservice.accuweather.com/'</span>
+  <span style="color: #aaeecc;">API_KEY</span> = <span style="color: #aaeecc;">ENV</span><span style="color: #aadddd;">[</span><span style="color: #aadddd;">'WEATHER_API_KEY'</span><span style="color: #aadddd;">]</span>
+  <span style="color: #aaeecc;">FORECAST</span> = <span style="color: #aadddd;">'forecasts/v1/daily/1day/'</span>
+
+
+  <span style="color: #aaffaa;">def</span> <span style="color: #aaffaa;">self</span>.<span style="color: #aaccff;">get_weather</span><span style="color: #aadddd;">(</span>city<span style="color: #aadddd;">)</span>
+    key = get_key<span style="color: #aadddd;">(</span>city<span style="color: #aadddd;">)</span>.to_s
+    response = get<span style="color: #aadddd;">(</span><span style="color: #aaeecc;">URL</span> + <span style="color: #aaeecc;">FORECAST</span> + key + <span style="color: #aadddd;">"?apikey=%20"</span> + <span style="color: #aaeecc;">API_KEY</span> + <span style="color: #aadddd;">"%20"</span><span style="color: #aadddd;">)</span>
+    response = <span style="color: #aaeecc;">JSON</span>.parse<span style="color: #aadddd;">(</span>response.body<span style="color: #aadddd;">)</span>
+    <span style="color: #aaffaa;">return</span> response<span style="color: #aadddd;">[</span><span style="color: #aadddd;">"Headline"</span><span style="color: #aadddd;">][</span><span style="color: #aadddd;">"Text"</span><span style="color: #aadddd;">]</span>
+  <span style="color: #aaffaa;">end</span>
+
+  <span style="color: #aaffaa;">def</span> <span style="color: #aaffaa;">self</span>.<span style="color: #aaccff;">get_key</span><span style="color: #aadddd;">(</span>city<span style="color: #aadddd;">)</span>
+    response = get<span style="color: #aadddd;">(</span><span style="color: #aaeecc;">URL</span> + <span style="color: #aadddd;">"locations/v1/cities/search?apikey=%20"</span> + <span style="color: #aaeecc;">API_KEY</span> + <span style="color: #aadddd;">"%20&amp;q="</span> + city<span style="color: #aadddd;">)</span>
+    response = <span style="color: #aaeecc;">JSON</span>.parse<span style="color: #aadddd;">(</span>response.body<span style="color: #aadddd;">)</span>
+    <span style="color: #aaffaa;">return</span> response<span style="color: #aadddd;">[</span><span style="color: #ccaaff;">0</span><span style="color: #aadddd;">][</span><span style="color: #aadddd;">"Key"</span><span style="color: #aadddd;">]</span>
+  <span style="color: #aaffaa;">end</span>
+
+<span style="color: #aaffaa;">end</span>
+</pre>
+</div>
+
+</section>
+</section>
+<section>
+<section id="slide-org342a4ef">
+<h2 id="org342a4ef">./intents/launch<sub>request</sub><sub>intent.rb</sub></h2>
+<div class="org-src-container">
+
+<pre  class="src src-ruby"><span style="color: #aaffaa;">require</span> <span style="color: #aadddd;">'ralyxa'</span>
+
+intent <span style="color: #aadddd;">'LaunchRequest'</span> <span style="color: #aaffaa;">do</span>
+  ask<span style="color: #aadddd;">(</span><span style="color: #aadddd;">"What city would you like weather information about?"</span><span style="color: #aadddd;">)</span>
+<span style="color: #aaffaa;">end</span>
+</pre>
+</div>
+
+</section>
+</section>
+<section>
+<section id="slide-orga88318d">
+<h2 id="orga88318d">./intents/get<sub>weather</sub><sub>intent.rb</sub></h2>
+<div class="org-src-container">
+
+<pre  class="src src-ruby"><span style="color: #aaffaa;">require</span> <span style="color: #aadddd;">'./lib/weather.rb'</span>
+<span style="color: #aaffaa;">require</span> <span style="color: #aadddd;">'ralyxa'</span>
+
+intent <span style="color: #aadddd;">"getWeatherIntent"</span> <span style="color: #aaffaa;">do</span>
+  city = request.slot_value<span style="color: #aadddd;">(</span><span style="color: #aadddd;">"city"</span><span style="color: #aadddd;">)</span>
+  respond<span style="color: #aadddd;">(</span><span style="color: #aaeecc;">Weather</span>.get_weather<span style="color: #aaeecc;">(</span>city<span style="color: #aaeecc;">)</span><span style="color: #aadddd;">)</span>
+<span style="color: #aaffaa;">end</span>
+</pre>
+</div>
+
+</section>
+</section>
+<section>
+<section id="slide-org6f804b3">
+<h2 id="org6f804b3">Let's See it!</h2>
+
+</section>
+</section>
+<section>
+<section id="slide-org8f03e55">
+<h2 id="org8f03e55">Additional Resources</h2>
+<ul>
+<li><a href="http://bit.ly/2uVALUt">http://bit.ly/2uVALUt</a></li>
+
+</ul>
+</section>
+</section>
+</div>
+</div>
+<script src="http://cdn.jsdelivr.net/reveal.js/3.0.0/lib/js/head.min.js"></script>
+<script src="http://cdn.jsdelivr.net/reveal.js/3.0.0/js/reveal.js"></script>
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+
+controls: true,
+progress: true,
+history: false,
+center: true,
+slideNumber: 'c',
+rollingLinks: true,
+keyboard: true,
+overview: true,
+width: 1200,
+height: 800,
+margin: 0.10,
+minScale: 0.50,
+maxScale: 2.50,
+
+theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+transition: Reveal.getQueryHash().transition || 'linear', // default/cube/page/concave/zoom/linear/fade/none
+transitionSpeed: 'default',
+multiplex: {
+    secret: '', // null if client
+    id: '', // id, obtained from socket.io server
+    url: '' // Location of socket.io server
+},
+
+// Optional libraries used to extend on reveal.js
+dependencies: [
+ { src: 'http://cdn.jsdelivr.net/reveal.js/3.0.0/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+ { src: 'http://cdn.jsdelivr.net/reveal.js/3.0.0/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: 'http://cdn.jsdelivr.net/reveal.js/3.0.0/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: 'http://cdn.jsdelivr.net/reveal.js/3.0.0/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+ { src: 'http://cdn.jsdelivr.net/reveal.js/3.0.0/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }]
+});
+</script>
+</body>
+</html>
